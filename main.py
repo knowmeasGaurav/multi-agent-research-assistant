@@ -15,6 +15,7 @@ def run_pipeline(topic: str):
     return result
 
 if __name__ == "__main__":
-    result = search_agent("latest ai regulation news 2026")
-    for r in result:
-        print(r.get("title"),"-",r.get("url"))
+    topic = "impact of AI regulation on startups in 2026"
+    final_state = run_pipeline(topic)
+    print("\nFinal state:")
+    print(final_state)

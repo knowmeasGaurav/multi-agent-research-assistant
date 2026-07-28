@@ -1,15 +1,22 @@
 from langgraph.graph import StateGraph, END
 from state import ResearchState
+from agents.orchestrator import orchestrator_agent
 from agents.search import search_agent
 
 def orchestrator_node(state: ResearchState) -> ResearchState:
     print("Orchestrator running...")
+    sub_questions = orchestrator_agent(state["topic"])
+    state["plan"] = sub_questions
     return state
 
 def search_node(state: ResearchState) -> ResearchState:
     print("Search running...")
-    results = search_agent(state["topic"])
-    state["raw_sources"] = {state["topic"]: results}
+    raw_sources = {}
+    for question in state["plan"]:
+        results = search_agent(question)
+        raw_sources[question]= results
+    
+    state["raw_sources"] = raw_sources
     return state
 
 def verification_node(state: ResearchState) -> ResearchState:
