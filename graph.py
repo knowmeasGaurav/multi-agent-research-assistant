@@ -2,6 +2,8 @@ from langgraph.graph import StateGraph, END
 from state import ResearchState
 from agents.orchestrator import orchestrator_agent
 from agents.search import search_agent
+from agents.verification import verification_agent
+from agents.synthesis import synthesis_agent
 
 def orchestrator_node(state: ResearchState) -> ResearchState:
     print("Orchestrator running...")
@@ -21,10 +23,14 @@ def search_node(state: ResearchState) -> ResearchState:
 
 def verification_node(state: ResearchState) -> ResearchState:
     print("Verification running...")
+    verified_claims = verification_agent(state["raw_sources"])
+    state["verified_claims"] = verified_claims
     return state
 
 def synthesis_node(state: ResearchState) -> ResearchState:
     print("Synthesis running...")
+    draft = synthesis_agent(state["topic"], state["verified_claims"])
+    state["draft"] = draft
     return state
 
 def formatting_node(state: ResearchState) -> ResearchState:
