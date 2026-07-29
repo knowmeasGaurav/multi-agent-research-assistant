@@ -4,6 +4,7 @@ from agents.orchestrator import orchestrator_agent
 from agents.search import search_agent
 from agents.verification import verification_agent
 from agents.synthesis import synthesis_agent
+from agents.formatting import formatting_agent
 
 def orchestrator_node(state: ResearchState) -> ResearchState:
     print("Orchestrator running...")
@@ -35,6 +36,8 @@ def synthesis_node(state: ResearchState) -> ResearchState:
 
 def formatting_node(state: ResearchState) -> ResearchState:
     print("Formatting running...")
+    report = formatting_agent(state["topic"], state["draft"], state["verified_claims"])
+    state["final_report"] = report
     return state
 
 
