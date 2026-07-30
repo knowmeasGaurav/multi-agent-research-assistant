@@ -18,7 +18,3 @@ def orchestrator_agent(topic:str)->list:
     
     sub_questions = json.loads(raw_text)
     return sub_questions
-
-if __name__ == "__main__":
-    result = orchestrator_agent("impact of AI regulation on startups in 2026")
-    print(result)

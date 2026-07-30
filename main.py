@@ -1,3 +1,4 @@
+import sys
 from graph import compiled_graph
 from agents.search import search_agent
 
@@ -15,7 +16,14 @@ def run_pipeline(topic: str):
     return result
 
 if __name__ == "__main__":
-    topic = "impact of AI regulation on startups in 2026"
+    if len(sys.argv) > 1:
+        topic = " ".join(sys.argv[1:])
+    else:
+        topic = input("Enter a research topic: ")
     final_state = run_pipeline(topic)
-    print("\nFinal state:")
-    print(final_state)
+    with open("report.md", "w", encoding="utf-8") as f:
+        f.write(final_state["final_report"])
+
+    print("\n✅ Report saved to report.md")
+    print(f"   Sub-questions researched: {len(final_state['plan'])}")
+    print(f"   Claims verified: {len(final_state['verified_claims'])}")

@@ -10,7 +10,7 @@ def formatting_agent(topic: str, draft:str, verified_claim:list)-> str:
         sources.update(claim.get("supporting_sources", []))
         sources.update(claim.get("contradicting_sources", []))
 
-    sources_list = "\n".join(f"-{url}" for url in sorted(sources))
+    sources_list = "\n\n".join(f"-{url}" for url in sorted(sources))
 
     report = f"""# Research Report: {topic}
 
