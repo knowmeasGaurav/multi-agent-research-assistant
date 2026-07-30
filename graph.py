@@ -16,8 +16,12 @@ def search_node(state: ResearchState) -> ResearchState:
     print("Search running...")
     raw_sources = {}
     for question in state["plan"]:
-        results = search_agent(question)
-        raw_sources[question]= results
+        try:
+            results = search_agent(question)
+        except Exception as e:
+            print(f"Search failed for '{question}': {e}")
+            results = []
+        raw_sources[question] = results
     
     state["raw_sources"] = raw_sources
     return state

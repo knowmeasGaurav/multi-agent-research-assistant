@@ -16,5 +16,10 @@ def orchestrator_agent(topic:str)->list:
     prompt= get_orchestrator_prompt(topic)
     raw_text = call_llm(prompt)
     
-    sub_questions = json.loads(raw_text)
+    try:
+        sub_questions = json.loads(raw_text)
+    except json.JSONDecodeError:
+        print(f"Orchestrator: failed to parse plan, falling back to single-question plan.")
+        sub_questions = [topic]
+
     return sub_questions
