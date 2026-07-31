@@ -10,7 +10,7 @@ llm = ChatGoogleGenerativeAI(
     google_api_key = os.getenv("GOOGLE_API_KEY")
 )
 
-def call_llm(prompt: str, max_retries: int = 3) -> str:
+def call_llm(prompt: str, max_retries: int = 10) -> str:
     response = None
     
     for attempt in range(max_retries):
