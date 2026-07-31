@@ -4,6 +4,12 @@ Give it a topic, and instead of one LLM call generating a generic essay, multipl
 
 This mirrors the orchestration patterns real production AI research tools use (e.g. Perplexity), rather than the "call the LLM once" pattern most tutorials stop at.
 
+## Status
+
+✅ Complete — all 5 agents built, tested, and wired end-to-end. Includes a Streamlit UI, retry/backoff for rate limits, and error handling for malformed LLM output and failed searches.
+
+**Live demo:** [ https://multiagent-research-assistant-project.streamlit.app/ ]
+
 ## How it works
 
 1. **Orchestrator agent** — breaks the topic into targeted sub-questions
@@ -22,6 +28,8 @@ See [`docs/ProjectArchitecture.md`](docs/ProjectArchitecture.md) for full archit
 - LangChain + LangGraph
 - Google Gemini API
 - Tavily (search)
+- Streamlit (UI)
+- uv (package/environment management)
 
 ## Setup
 
@@ -30,3 +38,27 @@ uv sync
 ```
 
 Create a `.env` file with:
+```
+GOOGLE_API_KEY=your_key_here
+TAVILY_API_KEY=your_key_here
+```
+
+## Run
+
+Streamlit UI:
+```bash
+uv run python -m streamlit run app.py
+```
+
+Or run the pipeline directly via CLI:
+```bash
+uv run python main.py "your research topic"
+```
+
+## Tests
+
+```bash
+uv run pytest
+```
+
+Note: `test_orchestrator.py` and `test_search.py` make real API calls (Gemini/Tavily). The rest use fake fixture data and don't consume API quota.
